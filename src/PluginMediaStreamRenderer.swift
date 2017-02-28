@@ -253,4 +253,15 @@ class PluginMediaStreamRenderer : NSObject, RTCEAGLVideoViewDelegate {
 		])
 	}
 
+	func captureImage() -> NSData {
+		// Create the UIImage
+		UIGraphicsBeginImageContextWithOptions(self.videoView.bounds.size, true, 0.0)
+		self.videoView.drawViewHierarchyInRect(self.videoView.bounds, afterScreenUpdates: true)
+
+		self.videoView.layer.renderInContext(UIGraphicsGetCurrentContext()!)
+		let image = UIGraphicsGetImageFromCurrentImageContext()
+		UIGraphicsEndImageContext()
+		let imageData : NSData = UIImageJPEGRepresentation(image!, 0.8)!
+		return imageData
+	}
 }

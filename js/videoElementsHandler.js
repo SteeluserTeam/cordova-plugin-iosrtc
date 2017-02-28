@@ -4,12 +4,13 @@
  */
 module.exports = videoElementsHandler;
 module.exports.observeVideo = observeVideo;
-
+module.exports.captureImage = captureImage;
 
 /**
  * Dependencies.
  */
 var debug = require('debug')('iosrtc:videoElementsHandler'),
+	exec = require('cordova/exec'),
 	MediaStreamRenderer = require('./MediaStreamRenderer'),
 
 
@@ -353,4 +354,12 @@ function releaseMediaStreamRenderer(video) {
 	delete video.videoWidth;
 	delete video.videoHeight;
 	delete video.readyState;
+}
+
+function captureImage(video, onResultOK, onError) {
+	if (!video._iosrtcMediaStreamRendererId) {
+		onError("Video renderer not found");
+		return;
+	}
+	exec(onResultOK, onError, 'iosrtcPlugin', 'captureImage', [video._iosrtcMediaStreamRendererId]);
 }

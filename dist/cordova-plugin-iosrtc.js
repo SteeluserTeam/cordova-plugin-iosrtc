@@ -2480,6 +2480,7 @@ module.exports = {
 
 	// Expose a function to handle a video not yet inserted in the DOM.
 	observeVideo:          videoElementsHandler.observeVideo,
+	captureImage:           videoElementsHandler.captureImage,
 
 	// Select audio output (earpiece or speaker).
 	selectAudioOutput:     selectAudioOutput,
@@ -2602,12 +2603,13 @@ function attachMediaStream(element, stream) {
  */
 module.exports = videoElementsHandler;
 module.exports.observeVideo = observeVideo;
-
+module.exports.captureImage = captureImage;
 
 /**
  * Dependencies.
  */
 var debug = require('debug')('iosrtc:videoElementsHandler'),
+	exec = require('cordova/exec'),
 	MediaStreamRenderer = require('./MediaStreamRenderer'),
 
 
@@ -2953,8 +2955,16 @@ function releaseMediaStreamRenderer(video) {
 	delete video.readyState;
 }
 
+function captureImage(video, onResultOK, onError) {
+	if (!video._iosrtcMediaStreamRendererId) {
+		onError("Video renderer not found");
+		return;
+	}
+	exec(onResultOK, onError, 'iosrtcPlugin', 'captureImage', [video._iosrtcMediaStreamRendererId]);
+}
+
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"./MediaStreamRenderer":4,"debug":18}],18:[function(require,module,exports){
+},{"./MediaStreamRenderer":4,"cordova/exec":undefined,"debug":18}],18:[function(require,module,exports){
 (function (process){
 /**
  * This is the web browser implementation of `debug()`.

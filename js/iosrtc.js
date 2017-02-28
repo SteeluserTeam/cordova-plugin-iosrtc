@@ -51,6 +51,7 @@ module.exports = {
 
 	// Expose a function to handle a video not yet inserted in the DOM.
 	observeVideo:          videoElementsHandler.observeVideo,
+	captureImage:           videoElementsHandler.captureImage,
 
 	// Select audio output (earpiece or speaker).
 	selectAudioOutput:     selectAudioOutput,
