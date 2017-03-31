@@ -873,12 +873,12 @@ class iosrtcPlugin : CDVPlugin {
 	}
 
 	func captureImage(command: CDVInvokedUrlCommand) {
-		let id = command.argumentAtIndex(0) as! Int
+		let id = command.argument(at: 0) as! Int
 		let pluginMediaStreamRenderer = self.pluginMediaStreamRenderers[id]
 		if pluginMediaStreamRenderer == nil {
 			NSLog("iosrtcPlugin#captureImage() | ERROR: pluginMediaStreamRenderer with id=%@ does not exist", String(id))
             self.emit(command.callbackId,
-                      result: CDVPluginResult(status: CDVCommandStatus_ERROR, messageAsString: "Video renderer not found")
+                      result: CDVPluginResult(status: CDVCommandStatus_ERROR, messageAs: "Video renderer not found")
             )
 			return
 		}
