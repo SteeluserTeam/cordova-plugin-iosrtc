@@ -28,8 +28,7 @@ var
 	RTCIceCandidate        = require('./RTCIceCandidate'),
 	MediaStream            = require('./MediaStream'),
 	MediaStreamTrack       = require('./MediaStreamTrack'),
-	videoElementsHandler   = require('./videoElementsHandler'),
-	rtcninjaPlugin         = require('./rtcninjaPlugin');
+	videoElementsHandler   = require('./videoElementsHandler');
 
 
 /**
@@ -53,14 +52,8 @@ module.exports = {
 	observeVideo:          videoElementsHandler.observeVideo,
 	captureImage:           videoElementsHandler.captureImage,
 
-	// Select audio output (earpiece or speaker).
-	selectAudioOutput:     selectAudioOutput,
-
 	// Expose a function to pollute window and naigator namespaces.
 	registerGlobals:       registerGlobals,
-
-	// Expose the rtcninjaPlugin module.
-	rtcninjaPlugin:        rtcninjaPlugin,
 
 	// Expose the debug module.
 	debug:                 require('debug'),
@@ -90,23 +83,9 @@ function refreshVideos() {
 }
 
 
-function selectAudioOutput(output) {
-	debug('selectAudioOutput() | [output:"%s"]', output);
-
-	switch (output) {
-		case 'earpiece':
-			exec(null, null, 'iosrtcPlugin', 'selectAudioOutputEarpiece', []);
-			break;
-		case 'speaker':
-			exec(null, null, 'iosrtcPlugin', 'selectAudioOutputSpeaker', []);
-			break;
-		default:
-			throw new Error('output must be "earpiece" or "speaker"');
-	}
-}
-
-
 function registerGlobals() {
+	debug('registerGlobals()');
+
 	if (!global.navigator) {
 		global.navigator = {};
 	}
