@@ -261,7 +261,6 @@ class PluginMediaStreamRenderer : NSObject, RTCEAGLVideoViewDelegate {
 		self.videoView.layer.render(in: UIGraphicsGetCurrentContext()!)
 		let image = UIGraphicsGetImageFromCurrentImageContext()
 		UIGraphicsEndImageContext()
-		let imageData : Data = UIImageJPEGRepresentation(image!, 0.8)!
-		return imageData
+		return UIImageJPEGRepresentation(image!, 0.8)!
 	}
 }

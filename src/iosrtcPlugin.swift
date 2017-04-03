@@ -872,7 +872,7 @@ class iosrtcPlugin : CDVPlugin {
 		}
 	}
 
-	func captureImage(command: CDVInvokedUrlCommand) {
+	func captureImage(_ command: CDVInvokedUrlCommand) {
 		let id = command.argument(at: 0) as! Int
 		let pluginMediaStreamRenderer = self.pluginMediaStreamRenderers[id]
 		if pluginMediaStreamRenderer == nil {
@@ -882,7 +882,7 @@ class iosrtcPlugin : CDVPlugin {
             )
 			return
 		}
-		let res = self.pluginMediaStreamRenderers[id]!.captureImage()
+		let res = pluginMediaStreamRenderer!.captureImage()
 		self.emit(command.callbackId,
 					result: CDVPluginResult(status: CDVCommandStatus_OK, messageAsArrayBuffer: res)
 		)
