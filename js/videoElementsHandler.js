@@ -36,8 +36,7 @@ var debug = require('debug')('iosrtc:videoElementsHandler'),
 
 	// Video element mutation observer.
 	videoObserver = new MutationObserver(function (mutations) {
-		var i, numMutations, mutation,
-			video;
+		var i, numMutations, mutation, video;
 
 		for (i = 0, numMutations = mutations.length; i < numMutations; i++) {
 			mutation = mutations[i];
@@ -58,7 +57,8 @@ var debug = require('debug')('iosrtc:videoElementsHandler'),
 
 	// DOM mutation observer.
 	domObserver = new MutationObserver(function (mutations) {
-		var i, numMutations, mutation,
+		var
+			i, numMutations, mutation,
 			j, numNodes, node;
 
 		for (i = 0, numMutations = mutations.length; i < numMutations; i++) {
@@ -128,9 +128,9 @@ var debug = require('debug')('iosrtc:videoElementsHandler'),
 
 
 function videoElementsHandler(_mediaStreams, _mediaStreamRenderers) {
-	var existingVideos = document.querySelectorAll('video'),
-		i, len,
-		video;
+	var
+		existingVideos = document.querySelectorAll('video'),
+		i, len, video;
 
 	mediaStreams = _mediaStreams;
 	mediaStreamRenderers = _mediaStreamRenderers;
@@ -170,7 +170,7 @@ function videoElementsHandler(_mediaStreams, _mediaStreamRenderers) {
 function observeVideo(video) {
 	debug('observeVideo()');
 
-	// If the video already has a src property but is not yet handled by the plugin
+	// If the video already has a src/srcObject property but is not yet handled by the plugin
 	// then handle it now.
 	if ((video.src || video.srcObject) && !video._iosrtcMediaStreamRendererId) {
 		handleVideo(video);
@@ -195,7 +195,7 @@ function observeVideo(video) {
 		characterDataOldValue: false,
 		// Set to an array of attribute local names (without namespace) if not all attribute mutations
 		// need to be observed.
-		attributeFilter: ['src']
+		attributeFilter: ['src', 'srcObject']
 	});
 
 	var srcObject = video.srcObject;
@@ -283,7 +283,8 @@ function handleVideoBlob(video, blob) {
 
 
 function provideMediaStreamRenderer(video, mediaStreamBlobId) {
-	var mediaStream = mediaStreams[mediaStreamBlobId],
+	var
+		mediaStream = mediaStreams[mediaStreamBlobId],
 		mediaStreamRenderer = mediaStreamRenderers[video._iosrtcMediaStreamRendererId];
 
 	if (!mediaStream) {
